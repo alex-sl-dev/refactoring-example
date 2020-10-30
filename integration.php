@@ -5,7 +5,7 @@ use Klumba\Repository\Exception\AllReadyExistRepositoryException;
 use Klumba\Repository\PaymentRepository;
 use Klumba\Repository\UserRepository;
 use Klumba\Services\MailService;
-use Klumba\Services\PaymentProcessorService;
+use Klumba\Services\UserPaymentsService;
 use Klumba\Services\PaymentService;
 use Klumba\Services\UserService;
 
@@ -21,14 +21,14 @@ $container->add(PaymentRepository::class, null, true);
 $container->add(UserService::class)->addArgument(UserRepository::class);
 $container->add(PaymentService::class)->addArgument(PaymentRepository::class);
 
-$container->add(PaymentProcessorService::class)->addArguments([
+$container->add(UserPaymentsService::class)->addArguments([
     UserService::class,
     PaymentService::class,
     MailService::class
 ]);
 
-/** @var PaymentProcessorService $paymentProcessor */
-$paymentProcessor = $container->get(PaymentProcessorService::class);
+/** @var UserPaymentsService $paymentProcessor */
+$paymentProcessor = $container->get(UserPaymentsService::class);
 
 $testData = require_once 'test-data.php';
 
@@ -44,7 +44,7 @@ foreach ($testData as $testDataRow) {
     $userRepository->add($userModel);
 
     try {
-        $paymentProcessor->processPayment($userModel, $amount);
+        $paymentProcessor->changeBalance($userModel, $amount);
 
         $expectedBalance = $user['balance'] + $amount;
 

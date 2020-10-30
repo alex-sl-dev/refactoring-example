@@ -8,7 +8,7 @@ use Exception;
 use Klumba\Domain\User;
 use Klumba\Services\Exception\PaymentProcessException;
 
-class PaymentProcessorService
+class UserPaymentsService
 {
     protected UserService $userService;
     protected PaymentService $paymentService;
@@ -32,7 +32,7 @@ class PaymentProcessorService
      * @param $amount
      * @throws PaymentProcessException
      */
-    public function processPayment(User $user, $amount)
+    public function changeBalance(User $user, $amount)
     {
         try {
             // for first
