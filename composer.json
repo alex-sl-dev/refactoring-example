@@ -1,0 +1,18 @@
+{
+  "name": "klumba/testapp",
+  "description": "",
+  "license": "MIT",
+  "type": "project",
+  "require": {
+    "php": "^7.4",
+    "league/container": "^3.3"
+  },
+  "autoload": {
+    "psr-4": {
+      "Klumba\\": "src/"
+    }
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^9.4"
+  }
+}
