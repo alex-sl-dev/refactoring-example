@@ -7,6 +7,7 @@ namespace Klumba\Services;
 use Klumba\Domain\User;
 use Klumba\Repository\Exception\NotFoundRepositoryException;
 use Klumba\Repository\UserRepository;
+use Klumba\Repository\UserStorable;
 
 
 /**
@@ -15,14 +16,14 @@ use Klumba\Repository\UserRepository;
  */
 class UserService
 {
-    protected UserRepository $userRepository;
+    protected UserStorable $userRepository;
 
     /**
      * UserService constructor.
      *
-     * @param UserRepository $userRepository
+     * @param UserStorable $userRepository
      */
-    public function __construct(UserRepository $userRepository)
+    public function __construct(UserStorable $userRepository)
     {
         $this->userRepository = $userRepository;
     }
@@ -31,7 +32,6 @@ class UserService
      * @param User $user
      * @param float $amount
      * @return bool
-     * @throws NotFoundRepositoryException
      */
     public function changeBalance(User $user, float $amount): bool
     {

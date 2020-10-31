@@ -9,11 +9,11 @@ use Klumba\Repository\Exception\AllReadyExistRepositoryException;
 
 
 /**
- * Class PaymentStorage
+ * Class PaymentRepository
  *
  * @package Klumba\Infrastructure
  */
-class PaymentRepository implements Storable
+class PaymentRepository implements PaymentStorable
 {
     private array $storage = [];
 

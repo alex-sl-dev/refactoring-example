@@ -3,7 +3,9 @@
 use Klumba\Domain\User;
 use Klumba\Repository\Exception\AllReadyExistRepositoryException;
 use Klumba\Repository\PaymentRepository;
+use Klumba\Repository\PaymentStorable;
 use Klumba\Repository\UserRepository;
+use Klumba\Repository\UserStorable;
 use Klumba\Services\MailService;
 use Klumba\Services\UserPaymentsService;
 use Klumba\Services\PaymentService;
@@ -13,13 +15,15 @@ require_once 'vendor/autoload.php';
 
 $container = new League\Container\Container;
 
+$container->add(UserRepository::class);
+$container->add(PaymentRepository::class);
+
+$container->add(UserStorable::class, UserRepository::class, true);
+$container->add(PaymentStorable::class, PaymentRepository::class, true);
+
+$container->add(UserService::class)->addArgument(UserStorable::class);
+$container->add(PaymentService::class)->addArgument(PaymentStorable::class);
 $container->add(MailService::class);
-
-$container->add(UserRepository::class, null, true);
-$container->add(PaymentRepository::class, null, true);
-
-$container->add(UserService::class)->addArgument(UserRepository::class);
-$container->add(PaymentService::class)->addArgument(PaymentRepository::class);
 
 $container->add(UserPaymentsService::class)->addArguments([
     UserService::class,
@@ -39,7 +43,7 @@ foreach ($testData as $testDataRow) {
     $userModel = new User($user['id'], $user['balance'], $user['email']);
 
     /** @var UserRepository $userRepository */
-    $userRepository = $container->get(UserRepository::class);
+    $userRepository = $container->get(UserStorable::class);
     // fix test case
     $userRepository->add($userModel);
 

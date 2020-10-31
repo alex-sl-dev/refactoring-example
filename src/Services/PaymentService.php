@@ -8,19 +8,20 @@ use Klumba\Domain\Payment;
 use Klumba\Domain\User;
 use Klumba\Repository\Exception\AllReadyExistRepositoryException;
 use Klumba\Repository\PaymentRepository;
+use Klumba\Repository\PaymentStorable;
 
 
 class PaymentService
 {
 
-    protected PaymentRepository $paymentRepository;
+    protected PaymentStorable $paymentRepository;
 
     /**
      * PaymentService constructor.
      *
-     * @param PaymentRepository $paymentRepository
+     * @param PaymentStorable $paymentRepository
      */
-    public function __construct(PaymentRepository $paymentRepository)
+    public function __construct(PaymentStorable $paymentRepository)
     {
         $this->paymentRepository = $paymentRepository;
     }
